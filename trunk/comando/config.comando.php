@@ -41,13 +41,13 @@
     //
     // ******************************************************
 
-    $config['services']['gettest'] = 'PostTestCommand;json;POST';
-    $config['services']['posttest'] = 'GetTestCommand;json;GET';
-    $config['services']['requesttest'] = 'AllTestCommand;json;REQUEST';
+    $config['services']['gettest'] = 'GetTestCommand;json;GET';
+    $config['services']['posttest'] = 'PostTestCommand;json;POST';
+    $config['services']['requesttest'] = 'RequestTestCommand;json;REQUEST';
     $config['services']['scripttest'] = 'InternalTestCommand;json;SCRIPT';
     $config['services']['actotest'] = 'ActoTestCommand;acto;REQUEST';
-    $config['services']['init'] = 'InitCommand;json;SCRIPT';
-    $config['services']['constants'] = 'ConstantsCommand;json;SCRIPT';
+    $config['services']['init'] = 'InitTestCommand;json;SCRIPT';
+    $config['services']['constants'] = 'ConstantsTestCommand;json;SCRIPT';
 
 
 
