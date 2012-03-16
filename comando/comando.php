@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: martindyrby
- * Date: Feb 14, 2012
- * Time: 3:26:59 PM
- * To change this template use File | Settings | File Templates.
- */
 date_default_timezone_set('CET');
 
 class Comando {
@@ -22,7 +15,7 @@ class Comando {
     }
 
     static public function display($service) {
-        $method = 'request';
+        $method = isset($_POST['service']) ? RequestType::POST : RequestType::GET ;
         return self::doExecute($service, $method, $_REQUEST);
     }
 
@@ -58,7 +51,7 @@ class Comando {
 
         // EXECUTE INITS
         foreach($config['init'] as $initCommandName) {
-            doExecute($initCommandName, RequestType::SCRIPT, $_REQUEST);
+            self::doExecute($initCommandName, RequestType::SCRIPT, $_REQUEST);
         }
     }
 
@@ -69,18 +62,20 @@ class Comando {
 		$service = self::$services[$commandName];
 		$commandClassName = $service['commandClassName'];
 		$responseType = $service['responseType'];
-        $requestType = $service['requestType'];
+        $requestType = strtolower($service['requestType']);
+        $method = strtolower($method);
 
         if($method != RequestType::SCRIPT) {
+
             if($requestType != RequestType::REQUEST) {
                 if($requestType != $method) {
                     $result = new ComandoResult();
+                    $result->setResponseType($responseType);
                     $result->setError("Service '".$commandName."' is not accessible through request type '".$method."'");
                     return $result;
                 }
             }
         }
-
 
         $request = ($initRequest != null) ? $initRequest : $_REQUEST ;
 
@@ -89,7 +84,7 @@ class Comando {
         $comando = null;
 
         eval('$comando = new '.$commandClassName.'();');
-        $comando->init($initRequest);
+        $comando->init($request);
         $result = $comando->execute();
         $result->setResponseType($responseType);
 
@@ -99,6 +94,7 @@ class Comando {
             $log->init($initRequest);
             $log->execute();
         }
+
         return $result;
     }
     static public function execute($commandName, $initRequest = null, $log = true) {
@@ -150,7 +146,7 @@ class ComandoResult {
 
     public function response() {
         switch($this->responseType) {
-            case RequestType::JSON:
+            case ResponseType::JSON:
                 if($this->status == 0) {
                     return json_encode(array(
                         'status' => 0,
@@ -174,15 +170,19 @@ class ComandoResult {
 class AbstractValidationCommand {
     protected $is_valid;
 
+    private $params;
+
     public function init($request) {
+        $params = array();
+        
         $required_fields = $this->required();
         $this->is_valid = true;
  
         foreach($required_fields as $fieldName) {
             if(isset($request[$fieldName])) {
-                $this->$fieldName = $request[$fieldName];
+                $this->params[$fieldName] = $request[$fieldName];
             } else {
-                $this->$fieldName = null;
+                $this->params[$fieldName] = null;
                 $this->is_valid = false;
             }
         }
@@ -190,9 +190,9 @@ class AbstractValidationCommand {
         $optional_fields = $this->optional();
         foreach($optional_fields as $fieldName) {
             if(isset($request[$fieldName])) {
-                $this->$fieldName = $request[$fieldName];
+                $this->$params[$fieldName] = $request[$fieldName];
             } else {
-                $this->$fieldName = null;
+                $this->params[$fieldName] = null;
             }
         }
     }
@@ -217,6 +217,10 @@ class AbstractValidationCommand {
     protected function optional() {
         return array();
     }
+
+    protected function getParam($paramName) {
+        return $this->params[$paramName];
+    }
 }
 
 class LogRequest {
@@ -228,11 +232,11 @@ class LogRequest {
     }
 
     public function execute() {
-        $comando = ORM::for_table('comando')->create();
+/*        $comando = ORM::for_table('comando')->create();
         $comando->command = $this->command;
         $comando->request = http_build_query($this->request);
         $comando->timestamp = date('Y-m-d H:i:s');
-        $comando->save();
+        $comando->save();*/
         return null;
     }
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<zumo>
+
+	<views>
+
+		<page id="gettest" mediator="Comando.Views.AjaxMediator" title="GET TEST" type="domclone" target="#pages .gettest" container="#page" manager="cascade" />
+
+		<page id="posttest" mediator="Comando.Views.AjaxMediator" title="POST TEST" type="domclone" target="#pages .posttest" container="#page" manager="cascade" />
+
+		<page id="requestTest" mediator="Comando.Views.AjaxMediator" title="REQUEST TEST" type="domclone" target="#pages .requesttest" container="#page" manager="cascade" />
+
+        <page id="scriptTest" mediator="Comando.Views.AjaxMediator" title="SCRIPT TEST" type="domclone" target="#pages .scripttest" container="#page" manager="cascade" />
+
+        <block id="resultblock" target="#block .resultblock" manager="cascade" />
+	</views>
+
+</zumo>
