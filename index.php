@@ -1,15 +1,11 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: martindyrby
- * Date: Feb 16, 2012
- * Time: 2:56:43 PM
- * To change this template use File | Settings | File Templates.
- */
+<html>
 
-    require_once('comando.php');
+    <head>
+        <title>PHP Comando test</title>
+    </head>
 
-    echo Comando::display($_REQUEST['service']);
-    exit;
+    <body>
 
-?>
+        
+    </body>
+</html>

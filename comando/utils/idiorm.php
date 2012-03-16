@@ -153,7 +153,7 @@
          * will be the only configuration required to use Idiorm.
          */
         public static function configure($key, $value=null) {
-            // Shortcut: If only one argument is passed, 
+            // Shortcut: If only one argument is passed,
             // assume it's a connection string
             if (is_null($value)) {
                 $value = $key;
@@ -1140,3 +1140,31 @@
         }
     }
 
+
+    class SetupIdiorm {
+
+        private $host;
+        private $username;
+        private $password;
+
+        public $no_log=true;
+
+        public function init($request) {
+            require_once('idiorm.php');
+
+            $this->host = $request['host'];
+            $this->username = $request['username'];
+            $this->password = $request['password'];
+
+        }
+
+        public function execute() {
+
+            ORM::configure($this->host);
+            ORM::configure('username', $this->username);
+            ORM::configure('password', $this->password);
+
+        }
+
+    }
+?>
