@@ -6,13 +6,12 @@
 	<target name="1. Create build folder">
         <mkdir dir="zip" />
 		<mkdir dir="build" />
-        <mkdir dir="build/commands" />
         <mkdir dir="build/utils" />
 	</target>
 
 	<target name="2. Copy files">
 		<copy file="comando/comando.php" tofile="build/comando.php"/>
-		<copy file="comando/config.comando.example.php" tofile="build/config.comando.example.php"/>
+		<copy file="comando/config.comando.php" tofile="build/config.comando.php"/>
 		<copy file="comando/index.php" tofile="build/index.php"/>
         <copy todir="build/utils">
             <fileset dir="comando/utils"/>

@@ -4,26 +4,15 @@
     // DON'T EDIT START !!!
     // ******************************************************
     $config = array();
-    $config['services'] = array();
+    $config['debug'] = true;
+    $config['commands'] = array();
     $config['init'] = array();
-    $config['utils'] = array();
+    $config['expression'] = array();
+    $config['logging'] = '';
+
     // ******************************************************
     // DON'T EDIT END !!!
     // ******************************************************
-
-
-
-
-
-    // ******************************************************
-    // PUT THE PATH TO THE FOLDER
-    // WHERE YOUR COMMANDS WILL RESIDE
-    // ******************************************************
-    $config['commands-path'] = 'commands';
-
-
-
-
 
 
 
@@ -37,19 +26,19 @@
     //      REQUEST - accepts execution for both GET and POST script
     //      SCRIPT - limits execution to script access only
     //
-    // $config['services']['COMMAND-ID'] = 'COMMAND-CLASS;RESPONSE-TYPE;REQUEST-TYPE';
+    // $config['services']['COMMAND-ID'] = array(
+    //      'type' => 'PATH-TO-CLASS.CLASS-NAME',
+    //      'request' => 'REQUEST-TYPE',
+    //      'response' => 'RESPONSE-TYPE',
+    //      'params' => array(
+    //          'key1' => 'value1',
+    //          'key2' => 'value2'
+    //      ),
+    //      'restriction' => 'EXPRESSION-NAME',
+    //      'restricted' => 'COMMAND-NAME'
+    //  );
     //
     // ******************************************************
-
-    $config['services']['gettest'] = 'GetTestCommand;json;GET';
-    $config['services']['posttest'] = 'PostTestCommand;json;POST';
-    $config['services']['requesttest'] = 'RequestTestCommand;json;REQUEST';
-    $config['services']['scripttest'] = 'InternalTestCommand;json;SCRIPT';
-    $config['services']['actotest'] = 'ActoTestCommand;acto;REQUEST';
-    $config['services']['init'] = 'InitTestCommand;json;SCRIPT';
-    $config['services']['constants'] = 'ConstantsTestCommand;json;SCRIPT';
-
-
 
 
 
@@ -61,28 +50,14 @@
     //
     // ******************************************************
 
-    $config['init'][] = 'init';
-    $config['init'][] = 'constants';
-
 
 
     // ******************************************************
-    // UTILS
-    // Include utils
+    // EXPRESSIONS
     //
-    // $config['utils'][] = 'UTIL-NAMES';
+    // $config['expression']['EXPRESSION-NAME'] = 'EXPRESSION';
     //
     // ******************************************************
-
-    $config['utils'][] = 'emarketeer';
-    $config['utils'][] = '';
-
-
-
-
-
-
-
 
 
 

@@ -1,22 +1,21 @@
 <?php
 
     // ******************************************************
-    // DON'T EDIT !!!
+    // DON'T EDIT START !!!
     // ******************************************************
     $config = array();
-    $config['services'] = array();
-
-
-
-
-
-
-
+    $config['commands'] = array();
+    $config['init'] = array();
+    $config['utils'] = array();
     // ******************************************************
-    // PUT THE PATH TO THE FOLDER
-    // WHERE YOUR COMMANDS WILL RESIDE
+    // DON'T EDIT END !!!
     // ******************************************************
-    $config['commands-path'] = 'commands';
+
+
+
+
+
+
 
 
 
@@ -32,9 +31,81 @@
     //      POST - limits execution to post requests as well as script
     //      REQUEST - accepts execution for both GET and POST script
     //      SCRIPT - limits execution to script access only
+    //
     // $config['services']['COMMAND-ID'] = 'COMMAND-CLASS;RESPONSE-TYPE;REQUEST-TYPE';
+    //
     // ******************************************************
 
-    // $config['services'][''] = '';
+    $config['commands']['gettest'] = array(
+        'type' => 'GetTestCommand',
+        'requestType' => 'GET'
+    );
+    $config['services']['posttest'] = array(
+        'type' => 'PostTestCommand',
+        'requestType' => 'POST'
+    );
+    $config['services']['requesttest'] = array(
+        'type' => 'RequestTestCommand',
+    );
+    $config['services']['scripttest'] = array(
+        'type' => 'InternalTestCommand',
+        'requestType' => 'SCRIPT'
+    );
+    $config['services']['actotest'] = array(
+        'type' => 'ActoTestCommand'
+    );
+    $config['services']['init'] = array(
+        'type' => 'InitTestCommand'
+    );
+    $config['services']['constants'] = array(
+        'type' => 'ConstantsTestCommand',
+        'requestType' => 'SCRIPT'
+    );
 
+
+
+
+
+    // ******************************************************
+    // INIT COMMAND - specify the ids of the commands to run
+    // on init the command will recieve the request array
+    //
+    // $config['init'][] = 'COMMAND-ID';
+    //
+    // ******************************************************
+
+    $config['init'][] = 'init';
+    $config['init'][] = 'constants';
+
+
+
+    // ******************************************************
+    // UTILS
+    // Include utils
+    //
+    // $config['utils'][] = 'UTIL-NAMES';
+    //
+    // ******************************************************
+
+    $config['utils'][] = 'emarketeer';
+    $config['utils'][] = '';
+
+
+
+
+
+
+
+
+
+
+    // ******************************************************
+    // DON'T EDIT START !!!
+    // ******************************************************
+    return $config;
+    // ******************************************************
+    // DON'T EDIT END !!!
+    // ******************************************************
 ?>
+
+
