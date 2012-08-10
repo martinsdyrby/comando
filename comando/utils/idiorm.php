@@ -734,6 +734,11 @@
             return $this;
         }
 
+        public function order_by_rand() {
+            $this->_order_by[] = "RAND()";
+            return $this;
+        }
+
         /**
          * Add an ORDER BY column DESC clause
          */
@@ -1150,21 +1155,19 @@
         public $no_log=true;
 
         public function init($request) {
-            require_once('idiorm.php');
-
             $this->host = $request['host'];
             $this->username = $request['username'];
             $this->password = $request['password'];
-
         }
 
         public function execute() {
-
             ORM::configure($this->host);
             ORM::configure('username', $this->username);
             ORM::configure('password', $this->password);
 
+            $result = new ComandoResult();
+            $result->setStatus(1);
+            return $result;
         }
-
     }
 ?>
