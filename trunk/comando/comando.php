@@ -125,10 +125,12 @@ class Comando {
 
 
         if ($proceed == false){
-			$result = new ComandoResult();
+            header("HTTP/1.0 403 Forbidden");
+            exit;
+/*			$result = new ComandoResult();
 			$result->setResponseType($response_type);
 			$result->setError("Service '".$commandName."' is restricted");
-			return $result;
+			return $result;*/
         }
 
         if($method != RequestType::SCRIPT) {

@@ -26,7 +26,7 @@
     //      REQUEST - accepts execution for both GET and POST script
     //      SCRIPT - limits execution to script access only
     //
-    // $config['services']['COMMAND-ID'] = array(
+    // $config['commands']['COMMAND-ID'] = array(
     //      'type' => 'PATH-TO-CLASS.CLASS-NAME',
     //      'request' => 'REQUEST-TYPE',
     //      'response' => 'RESPONSE-TYPE',
@@ -56,6 +56,10 @@
     // EXPRESSIONS
     //
     // $config['expression']['EXPRESSION-NAME'] = 'EXPRESSION';
+    //
+    //  Example. Given a command named login
+    //
+    // $config['expression']['verify_login'] = 'login.status == true';
     //
     // ******************************************************
 
