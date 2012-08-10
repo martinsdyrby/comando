@@ -22,9 +22,9 @@
                 }
             }
         } else {
-            echo 'No result';
+            header('HTTP/1.0 404 Not Found');
         }
     } else {
-        echo 'No service';
+        header('HTTP/1.0 404 Not Found');
     }
 ?>
