@@ -1156,12 +1156,13 @@
 
         public function init($request) {
             $this->host = $request['host'];
+            $this->host = $request['db'];
             $this->username = $request['username'];
             $this->password = $request['password'];
         }
 
         public function execute() {
-            ORM::configure($this->host);
+            ORM::configure('mysql:host='.$this->host.';dbname='.$this->db);
             ORM::configure('username', $this->username);
             ORM::configure('password', $this->password);
 
