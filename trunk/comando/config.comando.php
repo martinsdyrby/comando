@@ -4,6 +4,7 @@
     // DON'T EDIT START !!!
     // ******************************************************
     $config = array();
+    $config['classpath'] = "../";
     $config['debug'] = true;
     $config['commands'] = array();
     $config['init'] = array();
