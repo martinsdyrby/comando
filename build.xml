@@ -1,27 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<project default="4. Release" name="PHP Comando Build">
-
-	<target name="1. Create build folder">
-        <mkdir dir="zip" />
-		<mkdir dir="build" />
-        <mkdir dir="build/utils" />
-	</target>
-
-	<target name="2. Copy files">
-		<copy file="comando/comando.php" tofile="build/comando.php"/>
-		<copy file="comando/config.comando.php" tofile="build/config.comando.php"/>
-		<copy file="comando/index.php" tofile="build/index.php"/>
-        <copy todir="build/utils">
-            <fileset dir="comando/utils"/>
-        </copy>
-	</target>
-
-    <target name="3. Zip files">
+<project default="release" name="PHP Comando Build">
+    <target name="release">
+        <mkdir dir="release" />
         <input message="Please enter version:" addproperty="version" />
-        <zip destfile="zip/comando-${version}.zip" basedir="build" />
+        <zip destfile="release/comando-${version}.zip" basedir="comando" />
+        <zip destfile="release/comando-utils-${version}.zip" basedir="utils" />
     </target>
-
-    <target name="4. Release" depends="1. Create build folder,2. Copy files,3. Zip files" />
 </project>

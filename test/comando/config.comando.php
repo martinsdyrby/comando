@@ -4,6 +4,7 @@
     // DON'T EDIT START !!!
     // ******************************************************
     $config = array();
+    $config['classpath'] = "../";
     $config['debug'] = true;
     $config['commands'] = array();
     $config['init'] = array();
@@ -40,30 +41,58 @@
 
     $config['commands']['gettest'] = array(
         'type' => 'Test.GetTestCommand',
-        'requestType' => 'GET'
+        'request' => 'GET'
     );
-    $config['services']['posttest'] = array(
+    $config['commands']['posttest'] = array(
         'type' => 'Test.PostTestCommand',
-        'requestType' => 'POST'
+        'request' => 'POST'
     );
-    $config['services']['requesttest'] = array(
+    $config['commands']['requesttest'] = array(
         'type' => 'Test.RequestTestCommand',
     );
-    $config['services']['scripttest'] = array(
+    $config['commands']['scripttest'] = array(
         'type' => 'Test.InternalTestCommand',
-        'requestType' => 'SCRIPT'
+        'request' => 'SCRIPT'
     );
-    $config['services']['actotest'] = array(
+    $config['commands']['actotest'] = array(
         'type' => 'Test.ActoTestCommand'
     );
-    $config['services']['init'] = array(
+    $config['commands']['init'] = array(
         'type' => 'Test.InitTestCommand'
     );
-    $config['services']['constants'] = array(
+    $config['commands']['constants'] = array(
         'type' => 'Test.ConstantsTestCommand',
         'requestType' => 'SCRIPT'
     );
 
+
+    $config['commands']['test'] = array(
+        'type' => 'utils.test.AjaxTestService',
+        'params' => array(
+            'services' => array(
+                array(
+                    'service' => 'gettest',
+                    'request' => 'GET',
+                    'fields' => array('foo')
+                ),
+                array(
+                    'service' => 'posttest',
+                    'request' => 'POST',
+                    'fields' => array('foo')
+                ),
+                array(
+                    'service' => 'requesttest',
+                    'request' => 'GET',
+                    'fields' => array('foo')
+                ),
+                array(
+                    'service' => 'scripttest',
+                    'request' => 'GET',
+                    'fields' => array('foo')
+                ),
+            )
+        )
+    );
 
 
 
@@ -89,7 +118,6 @@
     //
     // ******************************************************
 
-    $config['utils'][] = 'emarketeer';
     $config['utils'][] = '';
 
 
