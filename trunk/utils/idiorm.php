@@ -1149,6 +1149,7 @@
     class SetupIdiorm {
 
         private $host;
+        private $db;
         private $username;
         private $password;
 
@@ -1156,7 +1157,7 @@
 
         public function init($request) {
             $this->host = $request['host'];
-            $this->host = $request['db'];
+            $this->db = $request['db'];
             $this->username = $request['username'];
             $this->password = $request['password'];
         }
