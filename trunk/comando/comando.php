@@ -9,6 +9,9 @@ class Comando {
 
     private $services = array();
     private $_request_params;
+    private $classpath = '';
+    private $debug = false;
+    private $logging;
 
     public function setService($serviceName, $commandName, $responseType, $requestType, $restriction, $restricted, $params) {
         $this->services[$serviceName] = array(
@@ -62,6 +65,20 @@ class Comando {
 			$this->logging = $config['logging'];
         } else {
             $this->logging = '';
+        }
+
+		/* SETUP DEBUGGING */
+		if(isset($config['debug'])){
+			$this->debug = $config['debug'];
+        } else {
+            $this->debug = false;
+        }
+
+        /* SETUP CLASSPATH */
+		if(isset($config['classpath'])){
+			$this->classpath = $config['classpath'];
+        } else {
+            $this->classpath = "";
         }
 
 
@@ -164,7 +181,7 @@ class Comando {
         $modulepart = explode('.', $command_class_name);
         $command_class_name = array_pop($modulepart);
         if(count($modulepart)>0) {
-            require_once('../'.implode('/',$modulepart).".php");
+            require_once($this->classpath.implode('/',$modulepart).".php");
         }
 
         $command = null;
@@ -302,6 +319,36 @@ class ComandoResult {
                 }
                 break;
         }
+    }
+}
+
+class ComandoHtmlResult extends ComandoResult {
+
+    private $header;
+    private $body;
+
+    function __construct() {
+        $this->doctype = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">';
+        $this->header = array();
+        $this->body = array();
+    }
+
+    public function setDoctype($text) {
+        $this->doctype = $text;
+    }
+
+    public function addToHeader($text) {
+        $this->header[] = $text;
+    }
+
+    public function addToBody($text) {
+        $this->body[] = $text;
+    }
+
+    public function response() {
+        header("Content-Type: text/html; charset=utf-8");
+
+        return $this->doctype."\n<html>\n\t<head>".implode("\n",$this->header)."\n\t</head>\n\t<body>".implode("\n", $this->body)."\n\t</body>\n</html>";
     }
 }
 
