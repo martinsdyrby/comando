@@ -1,1 +1,0 @@
-../../comando/index.php
