@@ -15,8 +15,8 @@
                 exit;
             } else {
                 $response = $result->response();
-                if(isset($_REQUEST['jsonp_callback'])) {
-                    echo $_REQUEST['jsonp_callback'].'('.$response.');';
+                if(isset($_REQUEST['callback'])) {
+                    echo $_REQUEST['callback'].'('.$response.');';
                 } else {
                     echo $response;
                 }
