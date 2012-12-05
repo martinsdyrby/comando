@@ -24,6 +24,10 @@ class Comando {
         );
     }
 
+    public function isDebug() {
+        return $this->debug;
+    }
+
     public function init($request) {
 
         self::$instance = $this;
@@ -93,15 +97,45 @@ class Comando {
         return $this->doExecute($commandName, RequestType::SCRIPT, $initRequest, true);
     }
 
-    public function display($service) {
-        try {
-            $method = isset($_POST['service']) ? RequestType::POST : RequestType::GET ;
-            return $this->doExecute($service, $method, $_REQUEST);
-        } catch (Exception $e) {
-            $log_error = $e->getMessage()."\nFound in ".$e->getFile()." on line ".$e->getLine()."\n\nTrace:\n".$e->getTraceAsString()."\n\n".http_build_query($_REQUEST);
-            $result = new ComandoResult();
-            $result->setError($log_error);
-            return $result;
+    public function display() {
+
+        if(isset($this->_request_params['service'])) {
+            $service = $this->_request_params['service'];
+
+            try {
+                $method = isset($_POST['service']) ? RequestType::POST : RequestType::GET ;
+
+                $result = $this->doExecute($service, $method, $_REQUEST);
+
+                if($result != null) {
+                    if($result->hasLocation()) {
+                        header('Location: '.$result->location());
+                        exit;
+                    } else {
+                        $response = $result->response();
+                        if(isset($_REQUEST['callback'])) {
+                            echo $_REQUEST['callback'].'('.$response.');';
+                        } else {
+                            echo $response;
+                        }
+                    }
+                } else {
+                    header('HTTP/1.0 404 Not Found');
+                }
+
+            } catch (Exception $e) {
+                $log_error = $e->getMessage()."\nFound in ".$e->getFile()." on line ".$e->getLine()."\n\nTrace:\n".$e->getTraceAsString()."\n\n".http_build_query($_REQUEST);
+                $result = new ComandoResult();
+                $result->setError($log_error);
+                $response = $result->response();
+                if(isset($_REQUEST['callback'])) {
+                    echo $_REQUEST['callback'].'('.$response.');';
+                } else {
+                    echo $response;
+                }
+            }
+        } else {
+            header('HTTP/1.0 404 Not Found');
         }
     }
 
@@ -228,6 +262,10 @@ class ComandoResult {
         $this->_error = $error;
     }
 
+    public function error() {
+        return $this->_error;
+    }
+
     public function setData($key, $value) {
         $this->_status = 1;
         if($this->_data == null) {
@@ -250,6 +288,10 @@ class ComandoResult {
 
     public function hasLocation() {
         return $this->_location != '' && $this->_location != null;
+    }
+
+    public function location() {
+        return $this->_location;
     }
 
     private function array_utf8_encode_recursive($dat) {

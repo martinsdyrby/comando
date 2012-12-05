@@ -1167,6 +1167,11 @@
             ORM::configure('username', $this->username);
             ORM::configure('password', $this->password);
 
+            $comando = Comando::$instance;
+            if($comando->isDebug()) {
+                ORM::configure("logging",true);
+            }
+
             $result = new ComandoResult();
             $result->setStatus(1);
             return $result;
